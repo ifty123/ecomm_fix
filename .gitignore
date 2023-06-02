@@ -110,6 +110,7 @@ ENV/
 env.bak/
 venv.bak/
 env_ku
+my_env
 data
 
 # Spyder project settings
