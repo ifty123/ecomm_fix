@@ -15,4 +15,6 @@ urlpatterns = [
      path('paypal-cancel/', views.paypal_cancel, name='paypal-cancel'),
      path('filter_products/', views.filter_products, name='filter_products'),
      path('search/', views.pencarian_barang, name='pencarian_barang'),
+     path('update_quantity/', views.update_quantity, name='update_quantity'),
+     # path('update-add-cart/<slug>/', views.update_cart, name='update-add-cart'),
 ]

@@ -80,6 +80,9 @@ class OrderProdukItem(models.Model):
         if self.produk_item.harga_diskon:
             return self.get_total_hemat_item()
         return 0
+    
+    def get_potongan_harga(self):
+        return self.produk_item.harga - self.produk_item.harga_diskon
 
 
 class Order(models.Model):
