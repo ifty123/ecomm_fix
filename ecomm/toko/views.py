@@ -7,6 +7,8 @@ from django.utils import timezone
 from django.views import generic
 from paypal.standard.forms import PayPalPaymentsForm
 
+from django.http import HttpRequest, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import CheckoutForm
 from .models import ProdukItem, OrderProdukItem, Order, AlamatPengiriman, Payment
@@ -239,3 +241,58 @@ def pencarian_barang(request):
         barang = None
     
     return render(request, 'home.html', {'object_list': barang})
+
+def update_quantity(request: HttpRequest):
+    if request.method == 'POST' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        product_id = request.POST.get('product_id')
+        action = request.POST.get('action')
+        total = None
+        hemat = None
+        total_all = None
+        total_hemat = None
+
+        try:
+            product = OrderProdukItem.objects.get(id=product_id)
+            if action == 'increase':
+                product.quantity += 1
+            elif action == 'decrease':
+                if product.quantity > 1:
+                    product.quantity -= 1
+            product.save()
+
+            if product.produk_item.harga_diskon:
+                total = product.get_total_harga_diskon_item()
+                hemat = product.get_total_hemat_item()
+            else :
+                total = product.get_total_harga_item()
+                
+            return JsonResponse({'quantity': product.quantity, 'total':total, 'hemat':hemat})
+        except OrderProdukItem.DoesNotExist:
+            return JsonResponse({'error': 'Product not found'}, status=400)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+# def update_cart(request, slug):
+#     def get(self, *args, **kwargs):
+#         if request.user.is_authenticated:
+#             produk_item = get_object_or_404(ProdukItem, slug=slug)
+#             order_produk_item, _ = OrderProdukItem.objects.get_or_create(
+#                 produk_item=produk_item,
+#                 user=request.user,
+#                 ordered=False
+#             )
+#             order_query = Order.objects.filter(user=request.user, ordered=False)
+#             if order_query.exists():
+#                 order = order_query[0]
+#                 if order.produk_items.filter(produk_item__slug=produk_item.slug).exists():
+#                     order_produk_item.quantity += 1
+#                     order_produk_item.save()
+
+#                     order = Order.objects.get(user=self.request.user, ordered=False)
+#                     context = {
+#                         'keranjang': order
+#                     }
+#                     template_name = 'order_summary.html'
+#                     return render(self.request, template_name, context)
+#         else:
+#             return redirect('/accounts/login')
