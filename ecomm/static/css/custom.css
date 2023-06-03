@@ -23,3 +23,34 @@ color: #E53935
 .sale-badge {
 background-color: #E53935
 }
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.custom-select select {
+  display: none;
+}
+
+.custom-select .selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.custom-select .selected-item {
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.custom-select .remove-item {
+  margin-left: 4px;
+  cursor: pointer;
+}
