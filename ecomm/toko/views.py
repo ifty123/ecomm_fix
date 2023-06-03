@@ -212,3 +212,30 @@ def paypal_return(request):
 def paypal_cancel(request):
     messages.error(request, 'Pembayaran dibatalkan')
     return redirect('toko:order-summary')
+
+def filter_products(request):
+    filtered_products = None
+    selected_kategori = request.GET.getlist('kategori')
+    selected_tags = request.GET.getlist('tags')
+
+
+    if selected_kategori or selected_tags:
+        filtered_products = ProdukItem.objects.all()
+        if selected_kategori:
+            filtered_products = filtered_products.filter(kategori__in=selected_kategori)
+        if selected_tags:
+            filtered_products = filtered_products.filter(label__in=selected_tags)
+    else:
+        filtered_products = ProdukItem.objects.all()
+
+    return render(request, 'home.html', {'object_list': filtered_products})
+    
+def pencarian_barang(request):
+    keyword = request.GET.get('keyword')
+
+    if keyword:
+        barang = ProdukItem.objects.filter(nama_produk__icontains=keyword)
+    else:
+        barang = None
+    
+    return render(request, 'home.html', {'object_list': barang})

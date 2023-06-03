@@ -13,7 +13,7 @@
             <div class="container-fluid">
 
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="#">Categories:</a>
+                <a class="navbar-brand" href="#">kategori:</a>
 
                 <!-- Toggle button -->
                 <button
@@ -26,6 +26,22 @@
                         aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
+                
+
+                <form method="GET" action="{% url 'toko:filter_products' %}">
+                  <select name="kategori" class="custom-select" multiple>
+                    <option value="AT">Atasan</option>
+                    <option value="BA">Bawahan</option>
+                    <option value="AK">Aksesoris</option>
+                  </select>
+
+                  <select name="tags" class="custom-select" multiple>
+                    <option value="NEW">Baru</option>
+                    <option value="SALE">Diskon</option>
+                    <option value="BEST">Paling Laku</option>
+                  </select>
+                  <button type="submit">Filter</button>
+                </form>
 
                 <!-- Collapsible wrapper -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent2">
@@ -51,8 +67,13 @@
                     </ul>
 
                     <!-- Search -->
-                    <form class="w-auto py-1" style="max-width: 12rem">
-                        <input type="search" class="form-control rounded-0" placeholder="Search" aria-label="Search">
+                    <form method="GET" class="w-auto py-1" style="max-width: 16rem" action="{% url 'toko:pencarian_barang' %}">
+                      <div class="input-group">
+                        <input type="search" name="keyword" class="form-control rounded rounded-0" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
                     </form>
 
                 </div>
@@ -128,6 +149,7 @@
         {% endif %}
         <!-- Pagination -->
     </div>
+    <script src="custom_select.js"></script>
 </main>
 <!--Main layout-->
 {% endblock content %}
