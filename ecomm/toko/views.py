@@ -246,8 +246,8 @@ def update_quantity(request: HttpRequest):
     if request.method == 'POST' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         product_id = request.POST.get('product_id')
         action = request.POST.get('action')
-        total = None
-        hemat = None
+        total = 0.0
+        hemat = 0.0
         total_all = None
         total_hemat = None
 
