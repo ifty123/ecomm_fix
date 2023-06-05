@@ -49,19 +49,19 @@
 
                        <!-- Link -->
                        <li class="nav-item acitve">
-                        <a class="nav-link text-white" href="#">All</a>
+                        <a class="nav-link text-white" href="/">All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Atasan</a>
+                            <a class="nav-link text-white" href="{% url 'toko:cari_produk' kategori='AT' %}">Atasan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Bawahan</a>
+                            <a class="nav-link text-white" href="{% url 'toko:cari_produk' kategori='BA' %}">Bawahan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Aksesoris</a>
+                            <a class="nav-link text-white" href="{% url 'toko:cari_produk' kategori='AK' %}">Aksesoris</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Sepatu</a>
+                            <a class="nav-link text-white" href="{% url 'toko:cari_produk' kategori='SE' %}">Sepatu</a>
                         </li>
 
                     </ul>

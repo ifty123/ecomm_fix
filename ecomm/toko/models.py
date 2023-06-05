@@ -32,8 +32,12 @@ class ProdukItem(models.Model):
     gambar = models.ImageField(upload_to='product_pics')
     label = models.CharField(choices=PILIHAN_LABEL, max_length=4)
     kategori = models.CharField(choices=PILIHAN_KATEGORI, max_length=2)
-    merk = models.TextField(null=True)
+    merk = models.CharField(null=True)
     min_pesan = models.IntegerField(default=1)
+    informasi_produk = models.TextField(max_length=200, blank=True)
+    gambar_satu = models.ImageField(upload_to='product_pics', null=True, default='product_pics/default_image.jpeg')
+    gambar_dua = models.ImageField(upload_to='product_pics', null=True, default='product_pics/default_image.jpeg')
+
 
     def __str__(self):
         return f"{self.nama_produk} - ${self.harga}"
@@ -50,6 +54,11 @@ class ProdukItem(models.Model):
     
     def get_remove_from_cart_url(self):
         return reverse("toko:remove-from-cart", kwargs={
+            "slug": self.slug
+            })
+
+    def get_reduce_from_cart_url(self):
+        return reverse("toko:reduce-from-cart", kwargs={
             "slug": self.slug
             })
     
