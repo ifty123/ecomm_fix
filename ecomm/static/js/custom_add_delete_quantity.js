@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const csrftoken = $('[name=csrfmiddlewaretoken]').val();
 
     $('.btn-increase').click(function(e) {
         e.preventDefault();
@@ -27,6 +27,7 @@ $(document).ready(function() {
                 $('#quantity_' + productId).text(response.quantity);
                 $('#total_harga_' + productId).text("$" + response.total);
                 $('#total_hemat_' + productId).text("Hemat $" + response.hemat);
+                updateTotalPrice();
                 // $('#total_all_' + productId).text("$" + response.total_all);
                 // $('#total_hemat_all_' + productId).text("Hemat $" + response.total_hemat);
             },
@@ -35,4 +36,26 @@ $(document).ready(function() {
             }
         });
     }
+
+    function updateTotalPrice() {
+        let totalPrice = 0;
+      
+        $('.product-item').each(function() {
+            var totalHargaItem = $('.total-harga-item').text();
+
+            var angka = totalHargaItem.match(/\d+(\.\d+)?/g);
+            var jumlah = 0;
+
+            for (var i = 0; i < angka.length; i++) {
+            jumlah += parseFloat(angka[i]);
+            }
+
+            totalPrice = jumlah
+        });
+
+        console.log("total",totalPrice);
+
+        $('#total-price').text("$" + totalPrice.toFixed(2));
+      }
+    
 });

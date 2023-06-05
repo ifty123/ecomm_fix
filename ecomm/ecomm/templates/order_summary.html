@@ -60,11 +60,20 @@
                 </td>
                 <td>                
                     {% if pItem.produk_item.harga_diskon %}
-                    <span id="total_harga_{{ pItem.id }}">${{ pItem.get_total_harga_diskon_item }}</span>
+
+
+                    <div class="product-item" data-product-total="{{ pItem.get_total_harga_diskon_item }}"></div>
+                        <span class="total-harga-item" id="total_harga_{{ pItem.id }}" >${{ pItem.get_total_harga_diskon_item }}</span>
+                    </div>
+
+                    
                     <span class="badge badge-danger rounded-pill d-inline" id="total_hemat_{{ pItem.id }}">Hemat ${{ pItem.get_total_hemat_item }}</span>
+
                     {% else %}
-                    <span id="total_harga_{{ pItem.id }}">${{ pItem.get_total_harga_item }}</span>
-                    ${{ pItem.get_total_harga_item }}
+                    <div class="product-item" data-product-total="{{ pItem.get_total_harga_item }}">
+                        <span class="total-harga-item" id="total_harga_{{ pItem.id }}">${{ pItem.get_total_harga_item }}</span>
+                    </div>
+                    <!-- ${{ pItem.get_total_harga_item }} -->
                     {% endif %}
                 </td>
             </tr>
@@ -85,7 +94,7 @@
                 <td colspan="4"><b>Total Belanja</b></td>
                 <td>
                     
-                    <b><span id="total_all_{{ pItem.id }}">${{ keranjang.get_total_harga_order }}</span></b>
+                    <span id="total-price">${{ keranjang.get_total_harga_order }}</span>
 
                     {% if keranjang.get_total_hemat_order %}
                     <span id="total_hemat_all_{{ pItem.id }}" class="badge badge-danger">Hemat ${{ keranjang.get_total_hemat_order }}</span>

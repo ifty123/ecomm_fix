@@ -18,6 +18,11 @@ class HomeListView(generic.ListView):
     queryset = ProdukItem.objects.all()
     paginate_by = 4
 
+class ContactView(generic.ListView):
+    template_name = 'kontak.html'
+    queryset = ProdukItem.objects.all()
+    paginate_by = 4
+
 class ProductDetailView(generic.DetailView):
     template_name = 'product_detail.html'
     queryset = ProdukItem.objects.all()
@@ -246,8 +251,8 @@ def update_quantity(request: HttpRequest):
     if request.method == 'POST' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         product_id = request.POST.get('product_id')
         action = request.POST.get('action')
-        total = None
-        hemat = None
+        total = 0.0
+        hemat = 0.0
         total_all = None
         total_hemat = None
 
@@ -270,6 +275,40 @@ def update_quantity(request: HttpRequest):
         except OrderProdukItem.DoesNotExist:
             return JsonResponse({'error': 'Product not found'}, status=400)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def reduce_from_cart(request, slug):
+    if request.user.is_authenticated:
+        produk_item = get_object_or_404(ProdukItem, slug=slug)
+        order_produk_item, _ = OrderProdukItem.objects.get_or_create(
+            produk_item=produk_item,
+            user=request.user,
+            ordered=False
+        )
+        order_query = Order.objects.filter(user=request.user, ordered=False)
+        if order_query.exists():
+            order = order_query[0]
+            if order.produk_items.filter(produk_item__slug=produk_item.slug).exists():
+                if order_produk_item.quantity > 1 :
+                    order_produk_item.quantity -= 1
+                    order_produk_item.save()
+                    pesan = f"ProdukItem sudah diupdate menjadi: { order_produk_item.quantity }"
+                    messages.info(request, pesan)
+                else:
+                    pesan = f"Produk Item tidak bisa di update"
+                    messages.warning(request, pesan)
+                return redirect('toko:produk-detail', slug = slug)
+            else:
+                messages.info(request, 'ProdukItem pilihanmu tidak ada pada keranjang')
+                return redirect('toko:produk-detail', slug = slug)
+        else:
+            messages.info(request, 'ProdukItem pilihanmu tidak ada pada keranjang')
+            return redirect('toko:produk-detail', slug = slug)
+    else:
+        return redirect('/accounts/login')
+
+def cari_produk(request, kategori):
+    produk = ProdukItem.objects.filter(kategori=kategori)
+    return render(request, 'home.html', {'object_list': produk})
 
 
 # def update_cart(request, slug):
