@@ -37,6 +37,7 @@ class ProdukItem(models.Model):
     informasi_produk = models.TextField(max_length=200, blank=True)
     gambar_satu = models.ImageField(upload_to='product_pics', null=True, default='product_pics/default_image.jpeg')
     gambar_dua = models.ImageField(upload_to='product_pics', null=True, default='product_pics/default_image.jpeg')
+    ukuran = models.CharField(null=True)
 
 
     def __str__(self):
@@ -61,6 +62,10 @@ class ProdukItem(models.Model):
         return reverse("toko:reduce-from-cart", kwargs={
             "slug": self.slug
             })
+
+    def get_list_ukuran(self):
+
+        return self.ukuran.split(",")
     
 class OrderProdukItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

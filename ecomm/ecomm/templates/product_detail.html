@@ -53,7 +53,10 @@
                         <div>
                             <p>Merk : {{ object.merk }}</p>
                             <p>Min Pemesanan : {{ object.min_pesan }}</p>
-                            <p>Warna Tersedia : </p>
+                            <p>Ukuran Tersedia : </p>
+                            {% for item in object.get_list_ukuran %}
+                                <span class="badge rounded-pill badge-secondary">{{ item }}</span>
+                            {% endfor %}
                         </div>
                     </div>
 
