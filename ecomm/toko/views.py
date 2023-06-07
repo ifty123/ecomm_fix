@@ -240,7 +240,7 @@ def filter_products(request):
     else:
         filtered_products = ProdukItem.objects.all()
 
-    return render(request, 'home.html', {'object_list': filtered_products})
+    return render(request, 'list_produk.html', {'object_list': filtered_products})
     
 def pencarian_barang(request):
     keyword = request.GET.get('keyword')
@@ -250,7 +250,7 @@ def pencarian_barang(request):
     else:
         barang = None
     
-    return render(request, 'home.html', {'object_list': barang})
+    return render(request, 'list_produk.html', {'object_list': barang})
 
 def update_quantity(request: HttpRequest):
     if request.method == 'POST' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
@@ -313,7 +313,7 @@ def reduce_from_cart(request, slug):
 
 def cari_produk(request, kategori):
     produk = ProdukItem.objects.filter(kategori=kategori)
-    return render(request, 'home.html', {'object_list': produk})
+    return render(request, 'list_produk.html', {'object_list': produk})
 
 
 # def update_cart(request, slug):
