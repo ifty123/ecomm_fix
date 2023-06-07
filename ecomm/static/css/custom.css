@@ -24,7 +24,7 @@ color: #E53935
 background-color: #E53935
 }
 
-.custom-select {
+/* .custom-select {
   position: relative;
   display: inline-block;
   background-color: #fff;
@@ -53,4 +53,4 @@ background-color: #E53935
 .custom-select .remove-item {
   margin-left: 4px;
   cursor: pointer;
-}
+} */

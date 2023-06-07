@@ -23,6 +23,11 @@ class ContactView(generic.ListView):
     queryset = ProdukItem.objects.all()
     paginate_by = 4
 
+class ProductListView(generic.ListView):
+    template_name = 'list_produk.html'
+    queryset = ProdukItem.objects.all()
+    paginate_by = 4
+
 class ProductDetailView(generic.DetailView):
     template_name = 'product_detail.html'
     queryset = ProdukItem.objects.all()
