@@ -23,6 +23,12 @@ PILIHAN_PEMBAYARAN = (
 
 User = get_user_model()
 
+class Ukuran(models.Model):
+    nama = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nama
+
 class ProdukItem(models.Model):
     nama_produk = models.CharField(max_length=100)
     harga = models.FloatField()
@@ -38,6 +44,9 @@ class ProdukItem(models.Model):
     gambar_satu = models.ImageField(upload_to='product_pics', null=True, default='product_pics/default_image.jpeg')
     gambar_dua = models.ImageField(upload_to='product_pics', null=True, default='product_pics/default_image.jpeg')
     ukuran = models.CharField(null=True)
+
+    def __str__(self):
+        return self.nama_produk
 
 
     def __str__(self):
